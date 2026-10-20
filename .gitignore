@@ -1,0 +1,18 @@
+# 환경 변수 및 민감한 키 보호 (절대 업로드 금지)
+.env
+.env.*
+!.env.example
+
+# 의존성 및 빌드 임시 폴더
+node_modules/
+dist/
+.vercel/
+.netlify/
+
+# OS 및 에디터 임시 파일
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+.vscode/
+.idea/

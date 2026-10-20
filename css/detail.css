@@ -1,0 +1,432 @@
+/* [화면 2] 상세 팝업 (Detail Modal) 스타일 */
+
+.detail-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(45, 35, 30, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.detail-modal-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.detail-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.detail-modal-backdrop.is-open .detail-modal-dialog {
+  transform: translateY(0) scale(1);
+}
+
+/* 우측 상단 닫기 버튼 */
+.detail-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(45, 35, 30, 0.62);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.18s ease, transform 0.15s ease;
+}
+
+.detail-close-btn:hover {
+  background-color: rgba(45, 35, 30, 0.85);
+  transform: scale(1.05);
+}
+
+.detail-close-btn:active {
+  transform: scale(0.96);
+}
+
+/* 스크롤 가능한 본문 래퍼 (위쪽 이미지 + 아래 상세 정보) */
+.detail-scroll-area {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 위쪽 절반: 상품 대표 이미지 영역 */
+.detail-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  min-height: 250px;
+  background-color: var(--bg-subtle);
+  overflow: hidden;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 아래쪽 절반: 상품 정보 및 판매자 정보 컨테이너 */
+.detail-content {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 1. 판매 상태 & 2. 카테고리 영역 */
+.detail-meta-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.detail-status-row,
+.detail-category-row {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 3. 상품명 */
+.detail-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.38;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+}
+
+/* 4. 판매 위치 & 5. 업로드 시간 */
+.detail-submeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--text-sub);
+}
+
+.detail-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detail-meta-label {
+  color: var(--text-muted);
+  font-weight: 500;
+  min-width: 68px;
+}
+
+.detail-meta-value {
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+/* 6. 가격 */
+.detail-price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  padding: 6px 0 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* 7. 상품 설명 */
+.detail-description {
+  font-size: 0.98rem;
+  color: var(--text-main);
+  line-height: 1.68;
+  white-space: pre-line;
+  word-break: break-word;
+  padding: 4px 0 8px;
+}
+
+/* [작성자 전용 관리 영역] 상태 변경 & 수정/삭제 버튼 */
+.detail-owner-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: var(--primary-light);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  margin-top: 2px;
+}
+
+.detail-owner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.detail-owner-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.detail-owner-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-owner-edit-btn,
+.detail-owner-delete-btn {
+  padding: 6px 12px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+.detail-owner-delete-btn {
+  color: #C62828;
+  border-color: #EF9A9A;
+  background-color: #FFF8F8;
+}
+
+.detail-owner-delete-btn:hover {
+  background-color: #FFEBEE;
+  border-color: #E57373;
+}
+
+.detail-owner-status-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-owner-status-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-sub);
+}
+
+.detail-owner-status-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.detail-status-select-btn {
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-sub);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-align: center;
+  transition: all 0.16s ease;
+}
+
+.detail-status-select-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-main);
+}
+
+.detail-status-select-btn.active[data-status="판매중"] {
+  background-color: var(--status-sale-bg);
+  color: var(--status-sale-text);
+  border-color: var(--status-sale-text);
+  box-shadow: 0 2px 6px rgba(46, 125, 50, 0.18);
+}
+
+.detail-status-select-btn.active[data-status="예약중"] {
+  background-color: var(--status-reserved-bg);
+  color: var(--status-reserved-text);
+  border-color: var(--status-reserved-text);
+  box-shadow: 0 2px 6px rgba(230, 81, 0, 0.18);
+}
+
+.detail-status-select-btn.active[data-status="거래 완료"] {
+  background-color: var(--status-done-bg);
+  color: var(--status-done-text);
+  border-color: var(--status-done-text);
+  box-shadow: 0 2px 6px rgba(96, 125, 139, 0.18);
+}
+
+/* 판매자 정보 섹션 */
+.detail-seller-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-top: 4px;
+}
+
+.detail-seller-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.detail-seller-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+  background-color: var(--primary-light);
+}
+
+.detail-seller-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.detail-seller-nickname {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-seller-region {
+  font-size: 0.84rem;
+  color: var(--text-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-seller-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--primary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 맨 아래 하단 액션 바 */
+.detail-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.detail-wish-btn {
+  flex: 1 1 38%;
+  height: 46px;
+  font-size: 0.95rem;
+}
+
+.detail-wish-btn.is-wished {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.detail-wish-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+
+.detail-wish-btn.is-wished .detail-wish-icon {
+  transform: scale(1.18);
+}
+
+.detail-chat-btn {
+  flex: 1 1 62%;
+  height: 46px;
+  font-size: 0.96rem;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 640px) {
+  .detail-modal-backdrop {
+    padding: 10px;
+    align-items: flex-end;
+  }
+
+  .detail-modal-dialog {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .detail-image-wrapper {
+    height: 240px;
+    min-height: 200px;
+  }
+
+  .detail-content {
+    padding: 18px 18px 20px;
+    gap: 12px;
+  }
+
+  .detail-title {
+    font-size: 1.2rem;
+  }
+
+  .detail-price {
+    font-size: 1.35rem;
+  }
+
+  .detail-action-bar {
+    padding: 12px 16px;
+  }
+
+  .detail-wish-btn,
+  .detail-chat-btn {
+    height: 44px;
+    font-size: 0.9rem;
+  }
+}

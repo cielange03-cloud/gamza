@@ -1,0 +1,492 @@
+/* =========================================================
+   [화면 3: 글쓰기 (내 물건 팔기)] 스타일 - css/write.css
+   ========================================================= */
+
+.write-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(45, 35, 30, 0.52);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1500;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.write-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.write-modal {
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.write-overlay.is-open .write-modal {
+  transform: translateY(0) scale(1);
+}
+
+/* 상단 헤더 */
+.write-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background-color: var(--bg-main);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.write-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.write-title-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background-color: var(--primary-light);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+
+.write-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.write-close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-sub);
+  font-size: 0.88rem;
+  font-weight: 600;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.write-close-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+/* 본문 폼 영역 */
+.write-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.write-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.write-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.write-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.write-required {
+  color: var(--primary);
+  font-size: 0.85rem;
+}
+
+.write-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-left: auto;
+}
+
+/* 공통 입력 컨트롤 */
+.write-input,
+.write-select,
+.write-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.write-input::placeholder,
+.write-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.write-input:focus,
+.write-select:focus,
+.write-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(110, 71, 43, 0.14);
+}
+
+.write-input.is-invalid,
+.write-select.is-invalid,
+.write-textarea.is-invalid {
+  border-color: #D32F2F;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.12);
+}
+
+.write-textarea {
+  min-height: 118px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+/* 가격 입력 래퍼 */
+.write-price-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.write-price-wrap .write-input {
+  padding-right: 40px;
+}
+
+.write-price-unit {
+  position: absolute;
+  right: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  pointer-events: none;
+}
+
+/* 1. 상품 이미지 업로드 & 샘플 프리셋 */
+.write-image-section {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.write-image-preview-box {
+  position: relative;
+  width: 150px;
+  height: 132px;
+  border-radius: var(--radius-md);
+  border: 1.5px dashed var(--border-strong);
+  background-color: var(--bg-main);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.write-image-preview-box:hover {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.write-image-preview-box.has-image {
+  border-style: solid;
+  border-color: var(--border-color);
+}
+
+.write-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.write-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-sub);
+  text-align: center;
+  padding: 10px;
+}
+
+.write-image-placeholder-icon {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.write-image-placeholder-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.write-image-remove-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(45, 35, 30, 0.72);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.write-image-remove-btn:hover {
+  background-color: var(--text-main);
+}
+
+.write-image-controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.write-upload-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.write-sample-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.write-sample-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-sub);
+}
+
+.write-sample-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.write-sample-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.write-sample-btn:hover {
+  background-color: var(--primary-light);
+  border-color: var(--secondary);
+}
+
+.write-sample-btn.is-active {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* 7. 판매 상태 라디오 탭 */
+.write-status-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.write-status-option {
+  position: relative;
+}
+
+.write-status-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.write-status-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 12px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--text-sub);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.write-status-label:hover {
+  background-color: var(--bg-subtle);
+}
+
+.write-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--border-strong);
+}
+
+/* 상태별 선택 스타일 (판매중 / 예약중 / 거래 완료) */
+.write-status-option input[value="판매중"]:checked + .write-status-label {
+  background-color: var(--status-sale-bg);
+  color: var(--status-sale-text);
+  border-color: var(--status-sale-text);
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.12);
+}
+.write-status-option input[value="판매중"]:checked + .write-status-label .write-status-dot {
+  background-color: var(--status-sale-text);
+}
+
+.write-status-option input[value="예약중"]:checked + .write-status-label {
+  background-color: var(--status-reserved-bg);
+  color: var(--status-reserved-text);
+  border-color: var(--status-reserved-text);
+  box-shadow: 0 2px 8px rgba(230, 81, 0, 0.12);
+}
+.write-status-option input[value="예약중"]:checked + .write-status-label .write-status-dot {
+  background-color: var(--status-reserved-text);
+}
+
+.write-status-option input[value="거래 완료"]:checked + .write-status-label {
+  background-color: var(--status-done-bg);
+  color: var(--status-done-text);
+  border-color: var(--status-done-text);
+  box-shadow: 0 2px 8px rgba(96, 125, 139, 0.12);
+}
+.write-status-option input[value="거래 완료"]:checked + .write-status-label .write-status-dot {
+  background-color: var(--status-done-text);
+}
+
+/* 에러 메시지 배너 */
+.write-error-msg {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background-color: #FFEBEE;
+  border: 1px solid #FFCDD2;
+  color: #C62828;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+/* 하단 푸터 (작성 완료 버튼) */
+.write-footer {
+  padding: 16px 24px;
+  background-color: var(--bg-main);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.write-submit-btn {
+  width: 100%;
+  padding: 13px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 640px) {
+  .write-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .write-modal {
+    max-width: 100%;
+    max-height: 94vh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .write-header {
+    padding: 15px 18px;
+  }
+
+  .write-body {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .write-row-2col {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .write-image-section {
+    flex-direction: column;
+  }
+
+  .write-image-preview-box {
+    width: 100%;
+    height: 160px;
+  }
+
+  .write-status-tabs {
+    gap: 6px;
+  }
+
+  .write-status-label {
+    padding: 10px 6px;
+    font-size: 0.84rem;
+  }
+
+  .write-footer {
+    padding: 14px 18px;
+  }
+}
